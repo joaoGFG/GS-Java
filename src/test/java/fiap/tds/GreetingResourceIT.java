@@ -1,4 +1,4 @@
-package org.acme;
+package fiap.tds;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 
