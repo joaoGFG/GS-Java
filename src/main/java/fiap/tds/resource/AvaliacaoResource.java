@@ -1,7 +1,10 @@
 package fiap.tds.resource;
 
+import fiap.tds.bo.AvaliacaoBO;
+import fiap.tds.dtos.AvaliacaoDTO;
 import fiap.tds.exception.AvaliacaoInvalidaException;
 import fiap.tds.model.Avaliacao;
+import fiap.tds.model.NivelRisco;
 import fiap.tds.repository.AvaliacaoRepository;
 
 import jakarta.ws.rs.*;
@@ -17,19 +20,27 @@ public class AvaliacaoResource {
     private AvaliacaoRepository repository = new AvaliacaoRepository();
 
     @POST
-    public Response cadastrar(Avaliacao avaliacao) {
+    public Response cadastrar(AvaliacaoDTO dto) {
         try {
-            if (avaliacao.getTipoConstrucao() == null) {
+            if (dto.tipoConstrucao == null) {
                 return Response.status(Response.Status.BAD_REQUEST)
                         .entity("O campo 'tipoConstrucao' é obrigatório e não foi fornecido ou é inválido.")
                         .build();
             }
-            if (avaliacao.getNivelRisco() == null) {
-                return Response.status(Response.Status.BAD_REQUEST)
-                        .entity("O campo 'nivelRisco' é obrigatório e não foi fornecido ou é inválido.")
-                        .build();
-            }
+
+            AvaliacaoBO bo = new AvaliacaoBO();
+            String nivelRisco = bo.calcularRisco(dto);
+
+            Avaliacao avaliacao = new Avaliacao();
+            avaliacao.setUsuario_id(dto.usuarioId);
+            avaliacao.setRuaAlaga(dto.ruaAlaga);
+            avaliacao.setMoraEmEncosta(dto.moraEmEncosta);
+            avaliacao.setNumeroPessoas(dto.numeroPessoas);
+            avaliacao.setTipoConstrucao(dto.tipoConstrucao);
+            avaliacao.setNivelRisco(NivelRisco.valueOf(nivelRisco));
+
             boolean sucesso = repository.inserir(avaliacao);
+
             if (sucesso) {
                 return Response.status(Response.Status.CREATED).entity(avaliacao).build();
             } else {
@@ -39,6 +50,7 @@ public class AvaliacaoResource {
             return Response.status(Response.Status.BAD_REQUEST).entity("Erro ao processar cadastro: " + e.getMessage()).build();
         }
     }
+
 
     @GET
     @Path("/{id}")
