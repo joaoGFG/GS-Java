@@ -40,7 +40,7 @@ public class UsuarioRepository {
 
 
     public Usuario buscarPorEmailSenha(String email, String senha) {
-        String sql = "SELECT * FROM USUARIOS WHERE EMAIL = ? AND SENHA = ?";
+        String sql = "SELECT * FROM Usuario WHERE EMAIL = ? AND SENHA = ?";
 
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -52,10 +52,10 @@ public class UsuarioRepository {
 
             if (rs.next()) {
                 Usuario usuario = new Usuario();
-                usuario.setId(rs.getInt("ID"));
-                usuario.setNome(rs.getString("NOME"));
-                usuario.setEmail(rs.getString("EMAIL"));
-                usuario.setSenha(rs.getString("SENHA"));
+                usuario.setId(rs.getInt("id_usuario"));
+                usuario.setNome(rs.getString("nome"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setSenha(rs.getString("senha"));
                 return usuario;
             } else {
                 throw new UsuarioNaoEncontradoException("Usuário não encontrado com o e-mail e senha informados.");
