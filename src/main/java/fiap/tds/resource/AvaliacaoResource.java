@@ -22,6 +22,14 @@ public class AvaliacaoResource {
     @POST
     public Response cadastrar(AvaliacaoDTO dto) {
         try {
+
+            System.out.println("Recebido JSON:");
+            System.out.println("usuarioId: " + dto.usuarioId);
+            System.out.println("moraEmEncosta: " + dto.moraEmEncosta);
+            System.out.println("ruaAlaga: " + dto.ruaAlaga);
+            System.out.println("tipoConstrucao: " + dto.tipoConstrucao);
+            System.out.println("numeroPessoas: " + dto.numeroPessoas);
+
             if (dto.tipoConstrucao == null) {
                 return Response.status(Response.Status.BAD_REQUEST)
                         .entity("O campo 'tipoConstrucao' é obrigatório e não foi fornecido ou é inválido.")
