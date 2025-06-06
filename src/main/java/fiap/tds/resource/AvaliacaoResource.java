@@ -22,20 +22,6 @@ public class AvaliacaoResource {
     @POST
     public Response cadastrar(AvaliacaoDTO dto) {
         try {
-
-            System.out.println("Recebido JSON:");
-            System.out.println("usuarioId: " + dto.getUsuarioId());
-            System.out.println("moraEmEncosta: " + dto.isMoraEmEncosta());
-            System.out.println("ruaAlaga: " + dto.isRuaAlaga());
-            System.out.println("tipoConstrucao: " + dto.getTipoConstrucao());
-            System.out.println("numeroPessoas: " + dto.getNumeroPessoas());
-
-            if (dto.getTipoConstrucao() == null) {
-                return Response.status(Response.Status.BAD_REQUEST)
-                        .entity("O campo 'tipoConstrucao' é obrigatório e não foi fornecido ou é inválido.")
-                        .build();
-            }
-
             AvaliacaoBO bo = new AvaliacaoBO();
             String nivelRisco = bo.calcularRisco(dto);
 
@@ -46,6 +32,13 @@ public class AvaliacaoResource {
             avaliacao.setNumeroPessoas(dto.getNumeroPessoas());
             avaliacao.setTipoConstrucao(dto.getTipoConstrucao());
             avaliacao.setNivelRisco(NivelRisco.valueOf(nivelRisco));
+
+            System.out.println("Recebido JSON:");
+            System.out.println("usuarioId: " + dto.getUsuarioId());
+            System.out.println("moraEmEncosta: " + dto.isMoraEmEncosta());
+            System.out.println("ruaAlaga: " + dto.isRuaAlaga());
+            System.out.println("tipoConstrucao: " + dto.getTipoConstrucao());
+            System.out.println("numeroPessoas: " + dto.getNumeroPessoas());
 
             boolean sucesso = repository.inserir(avaliacao);
 

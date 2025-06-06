@@ -24,8 +24,6 @@ public class AvaliacaoRepository {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, avaliacao.getUsuario_id());
-            stmt.setString(2, avaliacao.getCidade());
-            stmt.setString(3, avaliacao.getEstado());
             stmt.setBoolean(4, avaliacao.isMoraEmEncosta());
             stmt.setBoolean(5, avaliacao.isRuaAlaga());
 
@@ -98,14 +96,12 @@ public class AvaliacaoRepository {
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, novaAvaliacao.getCidade());
-            stmt.setString(2, novaAvaliacao.getEstado());
-            stmt.setBoolean(3, novaAvaliacao.isMoraEmEncosta());
-            stmt.setBoolean(4, novaAvaliacao.isRuaAlaga());
-            stmt.setString(5, novaAvaliacao.getTipoConstrucao().name());
-            stmt.setInt(6, novaAvaliacao.getNumeroPessoas());
-            stmt.setString(7, novaAvaliacao.getNivelRisco().name());
-            stmt.setInt(8, id);
+            stmt.setBoolean(1, novaAvaliacao.isMoraEmEncosta());
+            stmt.setBoolean(2, novaAvaliacao.isRuaAlaga());
+            stmt.setString(3, novaAvaliacao.getTipoConstrucao().name());
+            stmt.setInt(4, novaAvaliacao.getNumeroPessoas());
+            stmt.setString(5, novaAvaliacao.getNivelRisco().name());
+            stmt.setInt(6, id);
 
             return stmt.executeUpdate() > 0;
 
@@ -132,8 +128,6 @@ public class AvaliacaoRepository {
         Avaliacao a = new Avaliacao();
         a.setId(rs.getInt("id"));
         a.setUsuario_id(rs.getInt("usuario_id"));
-        a.setCidade(rs.getString("cidade"));
-        a.setEstado(rs.getString("estado"));
         a.setMoraEmEncosta(rs.getBoolean("mora_emergencia"));
         a.setRuaAlaga(rs.getBoolean("rua_alaga"));
         a.setTipoConstrucao(TipoConstrucao.valueOf(rs.getString("tipo_construcao")));

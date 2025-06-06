@@ -5,8 +5,6 @@ import java.util.Objects;
 public class Avaliacao {
     private int id;
     private int usuario_id;
-    private String cidade;
-    private String estado;
     private boolean moraEmEncosta;
     private boolean ruaAlaga;
     private TipoConstrucao tipoConstrucao;
@@ -27,22 +25,6 @@ public class Avaliacao {
 
     public void setUsuario_id(int usuario_id) {
         this.usuario_id = usuario_id;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
     }
 
     public boolean isMoraEmEncosta() {
@@ -90,12 +72,12 @@ public class Avaliacao {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Avaliacao avaliacao = (Avaliacao) o;
-        return id == avaliacao.id && usuario_id == avaliacao.usuario_id && moraEmEncosta == avaliacao.moraEmEncosta && ruaAlaga == avaliacao.ruaAlaga && numeroPessoas == avaliacao.numeroPessoas && Objects.equals(cidade, avaliacao.cidade) && Objects.equals(estado, avaliacao.estado) && tipoConstrucao == avaliacao.tipoConstrucao && Objects.equals(nivelRisco, avaliacao.nivelRisco);
+        return id == avaliacao.id && usuario_id == avaliacao.usuario_id && moraEmEncosta == avaliacao.moraEmEncosta && ruaAlaga == avaliacao.ruaAlaga && numeroPessoas == avaliacao.numeroPessoas && tipoConstrucao == avaliacao.tipoConstrucao && Objects.equals(nivelRisco, avaliacao.nivelRisco);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, usuario_id, cidade, estado, moraEmEncosta, ruaAlaga, tipoConstrucao, numeroPessoas, nivelRisco);
+        return Objects.hash(id, usuario_id, moraEmEncosta, ruaAlaga, tipoConstrucao, numeroPessoas, nivelRisco);
     }
 
     @Override
@@ -103,8 +85,8 @@ public class Avaliacao {
         return "Avaliacao{" +
                 "id=" + id +
                 ", usuarioId=" + usuario_id +
-                ", cidade='" + cidade + '\'' +
-                ", estado='" + estado + '\'' +
+                ", cidade='" + '\'' +
+                ", estado='" + '\'' +
                 ", moraEmEncosta=" + moraEmEncosta +
                 ", ruaAlaga=" + ruaAlaga +
                 ", tipoConstrucao=" + tipoConstrucao +
