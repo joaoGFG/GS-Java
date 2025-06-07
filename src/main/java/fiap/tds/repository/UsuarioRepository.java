@@ -152,18 +152,26 @@ public class UsuarioRepository {
     }
 
     public boolean deletarPorEmail(String email) {
-        String sql = "DELETE FROM Usuario WHERE email = ?";
+        String sqlUsuario = "DELETE FROM Usuario WHERE email = ?";
+        String sqlFilho = "DELETE FROM Avaliacoes WHERE usuario_id = (SELECT id_usuario FROM Usuario WHERE email = ?)";
 
-        try (Connection conn = DatabaseConfig.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseConfig.getConnection()) {
+            conn.setAutoCommit(false);
 
-            stmt.setString(1, email);
-            return stmt.executeUpdate() > 0;
+            try (PreparedStatement stmtFilho = conn.prepareStatement(sqlFilho)) {
+                stmtFilho.setString(1, email);
+                stmtFilho.executeUpdate();
+            }
+
+            try (PreparedStatement stmtUsuario = conn.prepareStatement(sqlUsuario)) {
+                stmtUsuario.setString(1, email);
+                int rows = stmtUsuario.executeUpdate();
+                conn.commit();
+                return rows > 0;
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao deletar usuário: " + e.getMessage());
         }
     }
-
-
 }
