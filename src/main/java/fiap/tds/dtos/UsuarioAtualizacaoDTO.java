@@ -1,8 +1,16 @@
 package fiap.tds.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UsuarioAtualizacaoDTO {
+
+    @JsonProperty("email")
     private String email;
+
+    @JsonProperty("novoNome")
     private String novoNome;
+
+    @JsonProperty("novaSenha")
     private String novaSenha;
 
     public UsuarioAtualizacaoDTO() {}
