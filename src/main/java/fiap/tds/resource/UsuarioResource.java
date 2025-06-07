@@ -3,6 +3,8 @@ package fiap.tds.resource;
 import fiap.tds.dtos.UsuarioAtualizacaoDTO;
 import fiap.tds.dtos.UsuarioDTO;
 import fiap.tds.dtos.UsuarioResponseDTO;
+import fiap.tds.exception.AvaliacaoInvalidaException;
+import fiap.tds.exception.UsuarioNaoEncontradoException;
 import fiap.tds.model.Usuario;
 import fiap.tds.repository.UsuarioRepository;
 import jakarta.ws.rs.*;
@@ -40,11 +42,12 @@ public class UsuarioResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response loginUsuario(UsuarioDTO dto) {
-        Usuario usuario = repository.buscarPorEmailSenha(dto.getEmail(), dto.getSenha());
-        if (usuario != null) {
+        try {
+            Usuario usuario = repository.buscarPorEmailSenha(dto.getEmail(), dto.getSenha());
             return Response.ok(usuario).build();
+        } catch (UsuarioNaoEncontradoException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).entity(e.getMessage()).build();
         }
-        return Response.status(Response.Status.UNAUTHORIZED).entity("Email ou senha inválidos").build();
     }
 
     @GET
@@ -69,6 +72,21 @@ public class UsuarioResource {
             return Response.ok("Dados do usuário atualizados com sucesso").build();
         } else {
             return Response.status(Response.Status.BAD_REQUEST).entity("Erro ao atualizar usuário").build();
+        }
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response deletar(@PathParam("id") int id) {
+        try {
+            boolean deletado = repository.deletar(id);
+            if (deletado) {
+                return Response.noContent().build();
+            } else {
+                return Response.status(Response.Status.NOT_FOUND).entity("Usuário não encontrado.").build();
+            }
+        } catch (AvaliacaoInvalidaException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
 

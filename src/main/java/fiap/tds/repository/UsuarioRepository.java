@@ -1,5 +1,6 @@
 package fiap.tds.repository;
 
+import fiap.tds.exception.AvaliacaoInvalidaException;
 import fiap.tds.exception.UsuarioNaoEncontradoException;
 import fiap.tds.infrastructure.DatabaseConfig;
 import fiap.tds.model.Usuario;
@@ -128,6 +129,19 @@ public class UsuarioRepository {
         }
     }
 
+    public boolean deletar(int id) {
+        String sql = "DELETE FROM Usuario WHERE id = ?";
+
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao deletar avaliação: " + e.getMessage());
+        }
+    }
 
 
 }
