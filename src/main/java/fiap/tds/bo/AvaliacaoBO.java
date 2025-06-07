@@ -17,7 +17,7 @@ public class AvaliacaoBO {
         if (dto.getNumeroPessoas() > 5) pontos += 1;
 
         if (pontos >= 7) return "ALTO";
-        if (pontos >= 4) return "MÉDIO";
+        if (pontos >= 4) return "MEDIO";
         return "BAIXO";
     }
 }
