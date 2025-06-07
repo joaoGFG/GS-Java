@@ -58,6 +58,15 @@ public class AvaliacaoResource {
         }
     }
 
+    @POST
+    @Path("/simular")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response simularRisco(AvaliacaoDTO dto) {
+        AvaliacaoBO bo = new AvaliacaoBO();
+        String nivelRisco = bo.calcularRisco(dto);
+        return Response.ok().entity("{\"nivelRisco\":\"" + nivelRisco + "\"}").build();
+    }
 
     @GET
     @Path("/{id}")
