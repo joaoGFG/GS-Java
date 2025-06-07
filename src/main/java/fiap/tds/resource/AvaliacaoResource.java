@@ -20,6 +20,8 @@ public class AvaliacaoResource {
     private AvaliacaoRepository repository = new AvaliacaoRepository();
 
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response cadastrar(AvaliacaoDTO dto) {
         try {
             AvaliacaoBO bo = new AvaliacaoBO();
@@ -27,6 +29,8 @@ public class AvaliacaoResource {
 
             Avaliacao avaliacao = new Avaliacao();
             avaliacao.setUsuario_id(dto.getUsuarioId());
+            avaliacao.setCidade(dto.getCidade());
+            avaliacao.setEstado(dto.getEstado());
             avaliacao.setRuaAlaga(dto.isRuaAlaga());
             avaliacao.setMoraEmEncosta(dto.isMoraEmEncosta());
             avaliacao.setNumeroPessoas(dto.getNumeroPessoas());
@@ -35,6 +39,8 @@ public class AvaliacaoResource {
 
             System.out.println("Recebido JSON:");
             System.out.println("usuarioId: " + dto.getUsuarioId());
+            System.out.println("cidade: " + dto.getCidade());
+            System.out.println("estado: " + dto.getEstado());
             System.out.println("moraEmEncosta: " + dto.isMoraEmEncosta());
             System.out.println("ruaAlaga: " + dto.isRuaAlaga());
             System.out.println("tipoConstrucao: " + dto.getTipoConstrucao());

@@ -5,11 +5,28 @@ import java.util.Objects;
 public class Avaliacao {
     private int id;
     private int usuario_id;
+    private String cidade;
+    private String estado;
     private boolean moraEmEncosta;
     private boolean ruaAlaga;
     private TipoConstrucao tipoConstrucao;
     private int numeroPessoas;
     private NivelRisco nivelRisco;
+
+    public Avaliacao() {
+    }
+
+    public Avaliacao(int id, int usuario_id, String cidade, String estado, boolean moraEmEncosta, boolean ruaAlaga, TipoConstrucao tipoConstrucao, int numeroPessoas, NivelRisco nivelRisco) {
+        this.id = id;
+        this.usuario_id = usuario_id;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.moraEmEncosta = moraEmEncosta;
+        this.ruaAlaga = ruaAlaga;
+        this.tipoConstrucao = tipoConstrucao;
+        this.numeroPessoas = numeroPessoas;
+        this.nivelRisco = nivelRisco;
+    }
 
     public int getId() {
         return id;
@@ -25,6 +42,22 @@ public class Avaliacao {
 
     public void setUsuario_id(int usuario_id) {
         this.usuario_id = usuario_id;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public boolean isMoraEmEncosta() {
@@ -69,31 +102,28 @@ public class Avaliacao {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Avaliacao avaliacao = (Avaliacao) o;
-        return id == avaliacao.id && usuario_id == avaliacao.usuario_id && moraEmEncosta == avaliacao.moraEmEncosta && ruaAlaga == avaliacao.ruaAlaga && numeroPessoas == avaliacao.numeroPessoas && tipoConstrucao == avaliacao.tipoConstrucao && Objects.equals(nivelRisco, avaliacao.nivelRisco);
+        return id == avaliacao.id && usuario_id == avaliacao.usuario_id && moraEmEncosta == avaliacao.moraEmEncosta && ruaAlaga == avaliacao.ruaAlaga && numeroPessoas == avaliacao.numeroPessoas && Objects.equals(cidade, avaliacao.cidade) && Objects.equals(estado, avaliacao.estado) && tipoConstrucao == avaliacao.tipoConstrucao && nivelRisco == avaliacao.nivelRisco;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, usuario_id, moraEmEncosta, ruaAlaga, tipoConstrucao, numeroPessoas, nivelRisco);
+        return Objects.hash(id, usuario_id, cidade, estado, moraEmEncosta, ruaAlaga, tipoConstrucao, numeroPessoas, nivelRisco);
     }
 
     @Override
     public String toString() {
         return "Avaliacao{" +
                 "id=" + id +
-                ", usuarioId=" + usuario_id +
-                ", cidade='" + '\'' +
-                ", estado='" + '\'' +
+                ", usuario_id=" + usuario_id +
+                ", cidade='" + cidade + '\'' +
+                ", estado='" + estado + '\'' +
                 ", moraEmEncosta=" + moraEmEncosta +
                 ", ruaAlaga=" + ruaAlaga +
                 ", tipoConstrucao=" + tipoConstrucao +
                 ", numeroPessoas=" + numeroPessoas +
-                ", nivelRisco='" + nivelRisco + '\'' +
+                ", nivelRisco=" + nivelRisco +
                 '}';
     }
-
-
 }

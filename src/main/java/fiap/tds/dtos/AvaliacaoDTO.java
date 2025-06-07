@@ -1,12 +1,29 @@
 package fiap.tds.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import fiap.tds.model.TipoConstrucao;
 
 public class AvaliacaoDTO {
+
+    @JsonProperty("usuarioId")
     private int usuarioId;
+
+    @JsonProperty("cidade")
+    private String cidade;
+
+    @JsonProperty("estado")
+    private String estado;
+
+    @JsonProperty("moraEmEncosta")
     private boolean moraEmEncosta;
+
+    @JsonProperty("ruaAlaga")
     private boolean ruaAlaga;
+
+    @JsonProperty("tipoConstrucao")
     private TipoConstrucao tipoConstrucao;
+
+    @JsonProperty("numeroPessoas")
     private int numeroPessoas;
 
     public AvaliacaoDTO() {}
@@ -17,6 +34,22 @@ public class AvaliacaoDTO {
 
     public void setUsuarioId(int usuarioId) {
         this.usuarioId = usuarioId;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
     }
 
     public boolean isMoraEmEncosta() {
