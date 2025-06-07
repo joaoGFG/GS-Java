@@ -151,17 +151,17 @@ public class UsuarioRepository {
         }
     }
 
-    public boolean deletar(int id) {
-        String sql = "DELETE FROM Usuario WHERE id = ?";
+    public boolean deletarPorEmail(String email) {
+        String sql = "DELETE FROM Usuario WHERE email = ?";
 
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, id);
+            stmt.setString(1, email);
             return stmt.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao deletar avaliação: " + e.getMessage());
+            throw new RuntimeException("Erro ao deletar usuário: " + e.getMessage());
         }
     }
 

@@ -91,17 +91,18 @@ public class UsuarioResource {
     }
 
     @DELETE
-    @Path("/{id}")
-    public Response deletar(@PathParam("id") int id) {
+    @Path("/deletar")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deletarPorEmail(UsuarioDTO dto) {
         try {
-            boolean deletado = repository.deletar(id);
+            boolean deletado = repository.deletarPorEmail(dto.getEmail());
             if (deletado) {
                 return Response.noContent().build();
             } else {
                 return Response.status(Response.Status.NOT_FOUND).entity("Usuário não encontrado.").build();
             }
-        } catch (AvaliacaoInvalidaException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro ao deletar usuário.").build();
         }
     }
 
