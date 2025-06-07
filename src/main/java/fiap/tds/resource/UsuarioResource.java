@@ -66,12 +66,27 @@ public class UsuarioResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response atualizarUsuario(UsuarioAtualizacaoDTO dto) {
-        boolean atualizado = repository.atualizar(dto.getEmail(), dto.getNovoNome(), dto.getNovaSenha());
+        try {
+            boolean atualizou = repository.atualizar(dto.getEmail(), dto.getNovoNome(), dto.getNovaSenha());
 
-        if (atualizado) {
-            return Response.ok("Dados do usuário atualizados com sucesso").build();
-        } else {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Erro ao atualizar usuário").build();
+            if (atualizou) {
+                return Response.ok("Dados do usuário atualizados com sucesso").build();
+            } else {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity("Nenhum dado para atualizar. Informe nome ou senha.")
+                        .build();
+            }
+
+        } catch (UsuarioNaoEncontradoException e) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(e.getMessage())
+                    .build();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Erro interno ao tentar atualizar o usuário.")
+                    .build();
         }
     }
 

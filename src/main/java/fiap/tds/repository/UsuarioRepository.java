@@ -107,14 +107,36 @@ public class UsuarioRepository {
     }
 
     public boolean atualizar(String email, String novoNome, String novaSenha) {
-        String sql = "UPDATE Usuario SET nome = ?, senha = ? WHERE email = ?";
+        StringBuilder sql = new StringBuilder("UPDATE Usuario SET ");
+        boolean atualizaNome = novoNome != null && !novoNome.trim().isEmpty();
+        boolean atualizaSenha = novaSenha != null && !novaSenha.trim().isEmpty();
+
+        if (!atualizaNome && !atualizaSenha) {
+            return false;
+        }
+
+        List<Object> parametros = new ArrayList<>();
+
+        if (atualizaNome) {
+            sql.append("nome = ?");
+            parametros.add(novoNome);
+        }
+
+        if (atualizaSenha) {
+            if (atualizaNome) sql.append(", ");
+            sql.append("senha = ?");
+            parametros.add(novaSenha);
+        }
+
+        sql.append(" WHERE email = ?");
+        parametros.add(email);
 
         try (Connection conn = DatabaseConfig.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
 
-            stmt.setString(1, novoNome);
-            stmt.setString(2, novaSenha);
-            stmt.setString(3, email);
+            for (int i = 0; i < parametros.size(); i++) {
+                stmt.setObject(i + 1, parametros.get(i));
+            }
 
             int linhasAfetadas = stmt.executeUpdate();
 
