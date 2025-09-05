@@ -12,7 +12,8 @@ public class DatabaseConfig {
     private static final String PASSWORD = "qGRXOeIaiOvELJZv"; 
 
     // URL de conexão para PostgreSQL com SSL obrigatório
-    private static final String URL = "jdbc:postgresql://" + HOST + ":" + PORT + "/" + DATABASE + "?sslmode=require";
+    private static final String URL =
+    "jdbc:postgresql://aws-0-xxx.pooler.supabase.com:6543/postgres?sslmode=require";
 
     public static Connection getConnection() throws SQLException {
         try {
