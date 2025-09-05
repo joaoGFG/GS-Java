@@ -36,6 +36,8 @@ por isso, é normal uma demora na resposta da API acontecer.
 
 ## 📦 Endpoints
 
+Fiz uma Collection para testes no Postman: https://cloudy-shadow-8140611.postman.co/workspace/My-Workspace~181a7838-1c82-4701-819f-ec9b6ab67aea/request/45051985-3b9b6fc3-188b-4bd1-b053-63dc17776b88?action=share&creator=45051985&ctx=documentation
+
 ### 🔐 Autenticação
 
 #### POST `/usuarios/cadastro`  
@@ -130,7 +132,7 @@ Permite simular uma avaliação de risco (tem que usar um id de usuario existent
   "moraEmEncosta": true,
   "ruaAlaga": false,
   "tipoConstrucao": "ALVENARIA",
-  "numeroPessoas": 4,
+  "numeroPessoas": 4
 }
 ```
 
