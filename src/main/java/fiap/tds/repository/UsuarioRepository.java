@@ -1,6 +1,5 @@
 package fiap.tds.repository;
 
-import fiap.tds.exception.AvaliacaoInvalidaException;
 import fiap.tds.exception.UsuarioNaoEncontradoException;
 import fiap.tds.infrastructure.DatabaseConfig;
 import fiap.tds.model.Usuario;
@@ -12,7 +11,7 @@ import java.util.List;
 public class UsuarioRepository {
 
     public boolean inserir(Usuario usuario) {
-        String sql = "INSERT INTO Usuario (NOME, EMAIL, SENHA) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO usuario (nome, email, senha) VALUES (?, ?, ?)";
 
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -24,7 +23,7 @@ public class UsuarioRepository {
             int linhasAfetadas = stmt.executeUpdate();
             if (linhasAfetadas == 0) return false;
 
-            String sqlBusca = "SELECT id_usuario FROM Usuario WHERE email = ?";
+            String sqlBusca = "SELECT id_usuario FROM usuario WHERE email = ?";
             try (PreparedStatement buscaStmt = conn.prepareStatement(sqlBusca)) {
                 buscaStmt.setString(1, usuario.getEmail());
                 ResultSet rs = buscaStmt.executeQuery();
@@ -39,9 +38,8 @@ public class UsuarioRepository {
         return true;
     }
 
-
     public Usuario buscarPorEmailSenha(String email, String senha) {
-        String sql = "SELECT * FROM Usuario WHERE EMAIL = ? AND SENHA = ?";
+        String sql = "SELECT * FROM usuario WHERE email = ? AND senha = ?";
 
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -69,7 +67,7 @@ public class UsuarioRepository {
 
     public List<Usuario> listarTodos() {
         List<Usuario> usuarios = new ArrayList<>();
-        String sql = "SELECT * FROM Usuario";
+        String sql = "SELECT * FROM usuario";
 
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -92,7 +90,7 @@ public class UsuarioRepository {
     }
 
     public boolean existeEmail(String email) {
-        String sql = "SELECT 1 FROM Usuario WHERE EMAIL = ?";
+        String sql = "SELECT 1 FROM usuario WHERE email = ?";
 
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -107,7 +105,7 @@ public class UsuarioRepository {
     }
 
     public boolean atualizar(String email, String novoNome, String novaSenha) {
-        StringBuilder sql = new StringBuilder("UPDATE Usuario SET ");
+        StringBuilder sql = new StringBuilder("UPDATE usuario SET ");
         boolean atualizaNome = novoNome != null && !novoNome.trim().isEmpty();
         boolean atualizaSenha = novaSenha != null && !novaSenha.trim().isEmpty();
 
@@ -152,8 +150,8 @@ public class UsuarioRepository {
     }
 
     public boolean deletarPorEmail(String email) {
-        String sqlUsuario = "DELETE FROM Usuario WHERE email = ?";
-        String sqlFilho = "DELETE FROM Avaliacoes WHERE usuario_id = (SELECT id_usuario FROM Usuario WHERE email = ?)";
+        String sqlUsuario = "DELETE FROM usuario WHERE email = ?";
+        String sqlFilho = "DELETE FROM avaliacoes WHERE usuario_id = (SELECT id_usuario FROM usuario WHERE email = ?)";
 
         try (Connection conn = DatabaseConfig.getConnection()) {
             conn.setAutoCommit(false);

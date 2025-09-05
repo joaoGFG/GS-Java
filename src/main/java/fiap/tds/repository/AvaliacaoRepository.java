@@ -15,7 +15,7 @@ public class AvaliacaoRepository {
 
     public boolean inserir(Avaliacao avaliacao) {
         String sql = """
-            INSERT INTO Avaliacoes 
+            INSERT INTO avaliacoes 
             (usuario_id, cidade, estado, mora_emergencia, rua_alaga, tipo_construcao, numero_pessoas, nivel_risco)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """;
