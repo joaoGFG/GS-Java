@@ -38,6 +38,12 @@ por isso, é normal uma demora na resposta da API acontecer.
 
 Fiz uma Collection para testes no Postman: https://cloudy-shadow-8140611.postman.co/workspace/My-Workspace~181a7838-1c82-4701-819f-ec9b6ab67aea/request/45051985-3b9b6fc3-188b-4bd1-b053-63dc17776b88?action=share&creator=45051985&ctx=documentation
 
+### Swagger
+
+<img width="1545" height="861" alt="image" src="https://github.com/user-attachments/assets/9d0acfdd-1d1b-4faa-b565-5f60114b6b36" />
+
+<img width="1512" height="930" alt="image" src="https://github.com/user-attachments/assets/6c63956e-02b6-411c-ac7e-edee6e926870" />
+
 ### 🔐 Autenticação
 
 #### POST `/usuarios/cadastro`  
